@@ -5,6 +5,11 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
+                @if (session('status'))
+                  <div class="alert alert-success">
+                      {{ session('status') }}
+                  </div>
+              @endif
                 <div class="card-header">User List</div>
 
                 <div class="card-body">
@@ -26,7 +31,7 @@
                                 </td>
                               <td>{{ $user->email }}</td>
                               <td>
-                                  <a href="#" class="btn btn-info" role="button">Edit</a>
+                                  <a href="users/{{ $user->id }}/edit" class="btn btn-info" role="button">Edit</a>
                                   <a href="#" class="btn btn-info btn-del-user" role="button" data-user-id="{{ $user->id }}">Delete</a>
                               </td>
                             </tr>

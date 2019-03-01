@@ -19,8 +19,13 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/users', 'UsersController@index')->name('users.index');
-Route::get('/users/{user}', 'UsersController@show')->name('users.show');
-Route::delete('/users/{user}', 'UsersController@destroy')->name('users.destroy');
+Route::middleware('auth')->group(function () {
+    Route::get('/users', 'UsersController@index')->name('users.index');
+    Route::get('/users/{user}', 'UsersController@show')->name('users.show');
+    Route::delete('/users/{user}', 'UsersController@destroy')->name('users.destroy');
+    Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit');
+    Route::post('/users/{user}', 'UsersController@update')->name('users.update');
 
-// Route::resource('users', 'UsersController');
+    Route::post('/orders', 'OrdersController@store')->name('orders.store');
+    Route::get('/orders/create', 'OrdersController@create')->name('orders.create');
+});

@@ -28,4 +28,5 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/orders', 'OrdersController@store')->name('orders.store');
     Route::get('/orders/create', 'OrdersController@create')->name('orders.create');
+    Route::post('/orders/cancelled/{order}', 'OrdersController@cancelled')->name('orders.cancelled');
 });

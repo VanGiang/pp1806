@@ -93,4 +93,26 @@ class OrdersController extends Controller
     {
         //
     }
+
+    public function cancelled(Request $request, $id)
+    {
+        $data = $request->only(['status']);
+
+        try {
+            $order = Order::find($id);
+            $order->update($data);
+
+            $result = [
+                'status' => true,
+                'msg' => 'Cancel success',
+            ];
+        } catch (Exception $e) {
+            $result = [
+                'status' => false,
+                'msg' => 'Cancel fail',
+            ];
+        }
+
+        return response()->json($result);
+    }
 }

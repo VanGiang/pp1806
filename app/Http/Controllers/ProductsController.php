@@ -48,6 +48,14 @@ class ProductsController extends Controller
             'avg_rating',
         ]);
 
+        $uploaded = $this->upload($data['image']);
+
+        if (!$uploaded['status']) {
+            return back()->with('status', $uploaded['msg']);
+        }
+
+        $data['image'] = $uploaded['file_name'];
+
         try {
             $product = Product::create($data);
         } catch (Exception $e) {
@@ -55,6 +63,40 @@ class ProductsController extends Controller
         }
 
         return redirect('products/' . $product->id)->with('status', 'Create success!');
+    }
+
+    private function upload($file)
+    {
+        $destinationFolder = public_path() . "/" . config('products.image_path');
+
+        try {
+            $fileName = $file->getClientOriginalName() . '_' . date('Ymd_His');
+            $ext = $file->getClientOriginalExtension();
+
+            if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+                $result = [
+                    'status' => false,
+                    'msg' => 'Sorry, only JPG, JPEG, PNG & GIF files are allowed.',
+                ];
+            }
+            // $mimeType = $file->getMimeType();
+            // $realPath = $file->getRealPath();
+            $file->move($destinationFolder, $fileName);
+
+            $result = [
+                'status' => true,
+                'file_name' => $fileName,
+            ];
+        } catch (Exception $e) {
+            $msg = $e->getMessage();
+
+            $result = [
+                'status' => false,
+                'msg' => $msg,
+            ];
+        }
+
+        return $result;
     }
 
     /**

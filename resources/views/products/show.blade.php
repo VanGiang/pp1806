@@ -27,7 +27,9 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">{{ __('Image') }}</div>
-                        <div class="col-md-6">{{ $product->image }}</div>
+                        <div class="col-md-6">
+                            <img src="{{ asset(config('products.image_path') . $product->image) }}" alt="{{ $product->image }}" height="70" width="70">
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">{{ __('Quantity') }}</div>

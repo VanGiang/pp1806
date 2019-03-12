@@ -9,7 +9,7 @@
                   <div class="alert alert-success">
                       {{ session('status') }}
                   </div>
-              @endif
+                @endif
                 <div class="card-header">Product List</div>
 
                 <div class="card-body">
@@ -38,6 +38,9 @@
                         @endforeach
                       </tbody>
                     </table>
+                    <div class="row justify-content-center">
+                      {{ $products->links() }}
+                    </div>
                     <a href="{{ route('products.create') }}" class="btn btn-info" role="button">Create product</a>
                 </div>
             </div>

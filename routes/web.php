@@ -36,4 +36,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/products/{product}', 'ProductsController@show')->name('products.show');
     Route::get('/products/{product}/edit', 'ProductsController@edit')->name('products.edit');
     Route::post('/products/{product}', 'ProductsController@update')->name('products.update');
+    Route::get('/products/search/{key}', 'ProductsController@search')->name('products.search');
 });

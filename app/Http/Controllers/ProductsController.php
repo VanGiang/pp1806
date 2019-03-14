@@ -171,4 +171,11 @@ class ProductsController extends Controller
     {
         //
     }
+
+    public function search($key)
+    {
+        $products = Product::where('product_name', 'like', "%$key%")->get()->toArray();
+
+        return response()->json($products);
+    }
 }

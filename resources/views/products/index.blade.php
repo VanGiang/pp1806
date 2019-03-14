@@ -10,7 +10,10 @@
                       {{ session('status') }}
                   </div>
                 @endif
-                <div class="card-header">Product List</div>
+                <div class="card-header">
+                    Product List
+                    <input type="text" name="search" placeholder="Search product name" id="search" class="float-right">
+                </div>
 
                 <div class="card-body">
                     <table class="table">
@@ -22,7 +25,7 @@
                           <th scope="col">Action</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody id="product-list">
                         @foreach ($products as $product)
                             <tr class="row_{{ $product->id }}">
                               <th scope="row">{{ $product->id }}</th>
@@ -50,7 +53,6 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-
         $('.btn-del-product').click(function() {
             if (confirm('You are sure?')) {
                 $.ajaxSetup({
@@ -78,6 +80,48 @@
                 });
             }
         });
+
+        $('#search').keyup(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            var keyWord = $(this).val();
+            var url = '/products/search/' + keyWord;
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(result) {
+                    displayProduct(result);
+                },
+                error: function() {
+                    location.reload();
+                }
+            });
+        });
+
+        function displayProduct(products) {
+            $('#product-list').html('');
+
+            $.each(products, function(index, product) {
+                var row = '<tr class="row_' + product.id + '">'
+                        +  '<th scope="row">' + product.id + '</th>'
+                        +  '<td>'
+                                + '<a href="#">' + product.product_name + '</a>'
+                            + '</td>'
+                        +  '<td>' + product.price + '</td>'
+                        +  '<td>'
+                            + '<a href="#" class="btn btn-info" role="button">Edit</a>'
+                            + '<a href="#" class="btn btn-info btn-del-product" role="button" data-product-id="' + product.id + '>Delete</a>'
+                        +  '</td>'
+                    + '</tr>';
+
+                $('#product-list').append(row);
+            });
+        }
     });
 </script>
 @endsection

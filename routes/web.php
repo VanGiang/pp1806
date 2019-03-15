@@ -19,6 +19,10 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware('auth')->group(function () {
+    Route::middleware('admin')->group(function () {
+        Route::get('admin/products', 'Admin\ProductsController@index')->name('admin.products.index');
+    });
+
     Route::get('/users', 'UsersController@index')->name('users.index');
     Route::get('/users/{user}', 'UsersController@show')->name('users.show');
     Route::delete('/users/{user}', 'UsersController@destroy')->name('users.destroy');
@@ -36,3 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/products/{product}', 'ProductsController@update')->name('products.update');
     Route::get('/products/search/{key}', 'ProductsController@search')->name('products.search');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

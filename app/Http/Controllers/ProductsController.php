@@ -14,11 +14,22 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::paginate(config('products.paginate'));
+        $params = $request->all();
 
-        return view('products.index', compact('products'));
+        $orderBy = isset($params['orderBy']) ? $params['orderBy'] : 'created_at';
+        $type = isset($params['type']) ? $params['type'] : 'desc';
+
+        $products = Product::orderBy($orderBy, $type)->paginate(config('products.paginate'));
+
+        $selected = [
+            1 => (($orderBy == 'created_at') && ($type == 'desc')),
+            2 => (($orderBy == 'price') && ($type == 'asc')),
+            3 => (($orderBy == 'price') && ($type == 'desc')),
+        ];
+
+        return view('products.index', ['products' => $products, 'selected' => $selected]);
     }
 
     /**

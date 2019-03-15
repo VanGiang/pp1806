@@ -2,5 +2,5 @@
 
 return [
     'image_path' => 'images/',
-    'paginate' => 2,
+    'paginate' => 3,
 ];

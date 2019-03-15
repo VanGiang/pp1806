@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class Product extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,6 +12,11 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'total_price', 'description', 'status',
+        'category_id',
+        'product_name',
+        'price',
+        'image',
+        'quantity',
+        'avg_rating',
     ];
 }

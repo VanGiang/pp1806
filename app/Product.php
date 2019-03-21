@@ -18,5 +18,6 @@ class Product extends Model
         'image',
         'quantity',
         'avg_rating',
+        'description',
     ];
 }

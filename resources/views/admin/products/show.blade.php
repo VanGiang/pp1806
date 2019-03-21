@@ -39,10 +39,6 @@
                         <div class="col-md-6">{{ __('Rating') }}</div>
                         <div class="col-md-6">{{ $product->avg_rating }}</div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">{{ __('Description') }}</div>
-                        <div class="col-md-6">{!! $product->description !!}</div>
-                    </div>
                 </div>
             </div>
 

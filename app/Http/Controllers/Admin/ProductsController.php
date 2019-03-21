@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Product;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductCreateRequest;
 use App\Http\Requests\ProductUpdateRequest;
 
@@ -29,7 +30,7 @@ class ProductsController extends Controller
             3 => (($orderBy == 'price') && ($type == 'desc')),
         ];
 
-        return view('products.index', ['products' => $products, 'selected' => $selected]);
+        return view('admin.products.index', ['products' => $products, 'selected' => $selected]);
     }
 
     /**
@@ -57,7 +58,6 @@ class ProductsController extends Controller
             'image',
             'quantity',
             'avg_rating',
-            'description',
         ]);
 
         $uploaded = $this->upload($data['image']);
@@ -85,7 +85,7 @@ class ProductsController extends Controller
             $fileName = $file->getClientOriginalName() . '_' . date('Ymd_His');
             $ext = $file->getClientOriginalExtension();
 
-            if($ext != "jpg" && $ext != "png" && $ext != "jpeg" && $ext != "gif" ) {
+            if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
                 $result = [
                     'status' => false,
                     'msg' => 'Sorry, only JPG, JPEG, PNG & GIF files are allowed.',

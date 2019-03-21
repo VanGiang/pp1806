@@ -57,6 +57,7 @@ class ProductsController extends Controller
             'image',
             'quantity',
             'avg_rating',
+            'description',
         ]);
 
         $uploaded = $this->upload($data['image']);
@@ -84,7 +85,7 @@ class ProductsController extends Controller
             $fileName = $file->getClientOriginalName() . '_' . date('Ymd_His');
             $ext = $file->getClientOriginalExtension();
 
-            if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+            if($ext != "jpg" && $ext != "png" && $ext != "jpeg" && $ext != "gif" ) {
                 $result = [
                     'status' => false,
                     'msg' => 'Sorry, only JPG, JPEG, PNG & GIF files are allowed.',

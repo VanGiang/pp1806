@@ -13,6 +13,15 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function index()
+    {
+        $users = DB::table('users')->paginate(5);
+
+        return view('users.index', ['users' => $users]);
+    }
+
+
     public function index()
     {
         $users = User::all();

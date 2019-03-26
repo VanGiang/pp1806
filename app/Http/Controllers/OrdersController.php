@@ -15,14 +15,16 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        //
-    }
+    //     $orders = Order::all();
+    //     return view('orders.index', ['orders' => $orders]);
+    // }
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
+    }
     public function create()
     {
         return view('orders.create');
@@ -38,14 +40,12 @@ class OrdersController extends Controller
     {
         $data = $request->only(['total_price', 'description']);
         $currentUserId = auth()->id();
-
         try {
             $data['user_id'] = $currentUserId;
             Order::create($data);
         } catch (Exception $e) {
             return back()->with('status', 'Create fail');
         }
-
         return redirect("users/$currentUserId")->with('status', 'Profile updated!');
     }
 
@@ -57,7 +57,11 @@ class OrdersController extends Controller
      */
     public function show($id)
     {
-        //
+        // $order = Order::find($id);
+        // if (!$order) {
+        //     return back()->with('status', 'Order not exist');
+        // }
+        // return view('orders.show', compact('order'));
     }
 
     /**
@@ -80,7 +84,16 @@ class OrdersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // $validated = $request->validated();
+        // $data = $request->only('user_id', 'total_price', 'description', 'status');
+        // $order = Order::find($id);
+        // try {
+        //     $order ->update($data);
+        // } catch (\Exception $e) {
+        //     dd($e->getMessage());
+        //     return back()->with('status', 'Update fail');
+        // }
+        // return redirect(route('orders.show', $order->id));
     }
 
     /**
@@ -90,7 +103,47 @@ class OrdersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
+    
     {
-        //
+        //  $order = Order::find($id);
+        // if (!$order) {
+        //     $result = [
+        //         'status' => false,
+        //         'message' => 'Order does not exist',
+        //     ];
+        // } else {
+        //     try {
+        //         $order->delete();
+        //         $result = [
+        //             'status' => true,
+        //             'message' => ' Delete successfully',
+        //         ];
+        //     } catch (\Exception $e) {
+        //         $result = [
+        //             'status' => true,
+        //             'message' => 'Failed to delete order',
+        //             'error' => $e->getMessage()
+        //         ];
+        //     }
+        // }
+        // return response()->json($result);
+    }
+    public function cancelled(Request $request, $id)
+    {
+        $data = $request->only(['status']);
+        try {
+            $order = Order::find($id);
+            $order->update($data);
+            $result = [
+                'status' => true,
+                'msg' => 'Cancel success',
+            ];
+        } catch (Exception $e) {
+            $result = [
+                'status' => false,
+                'msg' => 'Cancel fail',
+            ];
+        }
+        return response()->json($result);
     }
 }

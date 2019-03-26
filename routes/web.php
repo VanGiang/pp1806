@@ -28,4 +28,24 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/orders', 'OrdersController@store')->name('orders.store');
     Route::get('/orders/create', 'OrdersController@create')->name('orders.create');
-});
+    Route::post('/orders/cancelled/{order}', 'OrdersController@cancelled')->name('orders.cancelled');
+
+    Route::post('/products', 'ProductsController@store')->name('products.store');
+    Route::get('/products/create', 'ProductsController@create')->name('products.create');
+    Route::get('/products/{product}', 'ProductsController@show')->name('products.show');
+    Route::get('/products/{product}/edit', 'ProductsController@edit')->name('products.edit');
+    Route::post('/products/{product}', 'ProductsController@update')->name('products.update');
+    Route::get('/products/search/{key}', 'ProductsController@search')->name('products.search');
+
+    // Route::get('products/{products}/images',function() {
+    //     return view('products.images');
+    }); 
+
+    Route::post('admin', function(){
+        return view('admin');
+
+    });
+
+    
+    
+

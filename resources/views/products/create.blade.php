@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@include('ckfinder::setup')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -127,7 +128,12 @@
 @section('script')
     <script>
         ClassicEditor
-            .create( document.querySelector( '#description' ) )
+            .create( document.querySelector( '#description' ), {
+                ckfinder: {
+                    // Upload the images to the server using the CKFinder QuickUpload command.
+                    uploadUrl: 'http://localhost:8001/ckfinder/connector?command=FileUpload&type=Images&responseType=json'
+                }
+            } )
             .catch( error => {
                 console.error( error );
             } );

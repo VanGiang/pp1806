@@ -13,6 +13,7 @@ public/css
 public/js
 public/images
 public/mix-manifest.json
+public/userfiles
 storage/*.key
 .env.*.php
 .env.php
@@ -22,3 +23,6 @@ Homestead.json
 
 # Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
 .rocketeer/
+
+composer.lock
+package-lock.json

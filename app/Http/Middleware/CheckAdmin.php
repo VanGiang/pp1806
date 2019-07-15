@@ -15,7 +15,7 @@ class CheckAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth()->user()->name != 'giang') {
+        if (Auth()->id() != 1) {
             return redirect('/');
         }
 
